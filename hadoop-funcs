@@ -1,0 +1,216 @@
+hls() {
+  [ "$1" = '-r' ] && shift && local _r=r
+
+  hadoop fs -ls$_r "$@" | perl -lane 'print $F[7] if $F[7]'
+}
+
+hlsm() {
+  hadoop fs -ls "$@" \
+    | perl -lane 'printf("%-10s%s\n", int($F[4] / 1024 / 1024) . "M", $F[7])
+      if $F[7]'
+}
+
+hlsg() {
+  hadoop fs -ls "$@" \
+    | perl -lane 'printf("%-7s%s\n", int($F[4] / 1024 / 1024 / 1024) . "G",
+      $F[7]) if $F[7]'
+}
+
+hlsr() {
+  hls -r "$@"
+}
+
+hlsh() {
+  hadoop fs -ls "$@" | perl -lane '
+    if ($F[4] > 1099511627776) {
+      $size = sprintf "%dT", $F[4] / 1099511627776;
+    }
+    elsif ($F[4] > 1073741824) {
+      $size = sprintf "%dG", $F[4] / 1073741824;
+    }
+    elsif ($F[4] > 1048576) {
+      $size = sprintf "%dM", $F[4] / 1048576;
+    }
+    elsif ($F[4] > 1024) {
+      $size = sprintf "%dK", $F[4] / 1024;
+    }
+    else {
+      $size = sprintf "%dB", $F[4];
+    }
+    printf "%-5s%s\n", $size, $F[7] if $F[7];
+  '
+}
+
+hlsl() {
+  [ "$1" = '-r' ] && shift && local _r=r
+
+  hadoop fs -ls$_r "$@" | perl -lane '
+    if ($F[4] > 1099511627776) {
+      $size = sprintf "%dT", $F[4] / 1099511627776;
+    }
+    elsif ($F[4] > 1073741824) {
+      $size = sprintf "%dG", $F[4] / 1073741824;
+    }
+    elsif ($F[4] > 1048576) {
+      $size = sprintf "%dM", $F[4] / 1048576;
+    }
+    elsif ($F[4] > 1024) {
+      $size = sprintf "%dK", $F[4] / 1024;
+    }
+    else {
+      $size = sprintf "%dB", $F[4];
+    }
+    #$size = sprintf "%8s", $size;
+    s/\s+(\d+)\s+(\d{4}-\d{2}-\d{2})/ $size \2/;
+    #$home =~ "/user/" . $ENV{USER};
+    #s/ $home/ ~/;
+    print if $F[7];
+  '
+}
+
+hlslr() {
+  hlsl -r "$@"
+}
+
+hduks() {
+  hadoop fs -dus "$@" | perl -lane '
+    $size = $F[1] / 1024;
+    printf "%d %s\n", $size, $F[0];
+  '
+}
+
+hduhs() {
+  hadoop fs -dus "$@" | perl -lane '
+    if ($F[1] > 1099511627776) {
+      $size = sprintf "%dT", $F[1] / 1099511627776;
+    }
+    elsif ($F[1] > 1073741824) {
+      $size = sprintf "%dG", $F[1] / 1073741824;
+    }
+    elsif ($F[1] > 1048576) {
+      $size = sprintf "%dM", $F[1] / 1048576;
+    }
+    elsif ($F[1] > 1024) {
+      $size = sprintf "%dK", $F[1] / 1024;
+    }
+    else {
+      $size = sprintf "%dB", $F[1];
+    }
+    printf "%-5s%s\n", $size, $F[0];
+  '
+}
+
+hdf() {
+  hadoop fs -df "$@" | perl -lane '
+    $f = $F[1];
+    if ($f > 1099511627776) {
+      $size = sprintf "%dT", $f / 1099511627776;
+    }
+    elsif ($f > 1073741824) {
+      $size = sprintf "%dG", $f / 1073741824;
+    }
+    elsif ($f > 1048576) {
+      $size = sprintf "%dM", $f / 1048576;
+    }
+    elsif ($f > 1024) {
+      $size = sprintf "%dK", $f / 1024;
+    }
+    else {
+      $size = sprintf "%dB", $f;
+    }
+
+    $f = $F[2];
+    if ($f > 1099511627776) {
+      $used = sprintf "%dT", $f / 1099511627776;
+    }
+    elsif ($f > 1073741824) {
+      $used = sprintf "%dG", $f / 1073741824;
+    }
+    elsif ($f > 1048576) {
+      $used = sprintf "%dM", $f / 1048576;
+    }
+    elsif ($f > 1024) {
+      $used = sprintf "%dK", $f / 1024;
+    }
+    else {
+      $used = sprintf "%dB", $f;
+    }
+
+    $f = $F[3];
+    if ($f > 1099511627776) {
+      $avail = sprintf "%dT", $f / 1099511627776;
+    }
+    elsif ($f > 1073741824) {
+      $avail = sprintf "%dG", $f / 1073741824;
+    }
+    elsif ($f > 1048576) {
+      $avail = sprintf "%dM", $f / 1048576;
+    }
+    elsif ($f > 1024) {
+      $avail = sprintf "%dK", $f / 1024;
+    }
+    else {
+      $avail = sprintf "%dB", $f;
+    }
+
+    $format = "%-16s%-8s%-8s%-8s%s\n";
+    if (/^Filesystem/) {
+      printf $format, $F[0], $F[1], $F[2], $F[3], $F[4];
+    }
+    else {
+      printf $format, $F[0], $size, $used, $avail, $F[4];
+    }
+  '
+}
+
+hcat() {
+  hadoop fs -cat "$@"
+}
+
+htext() {
+  hadoop fs -text "$@"
+}
+
+hhead() {
+  hadoop fs -cat "$@" | head
+}
+
+htail() {
+  hadoop fs -cat "$@" | tail
+}
+
+hget() {
+  hadoop fs -get "$@"
+}
+
+hput() {
+  hadoop fs -put "$@"
+}
+
+hmkdir() {
+  hadoop fs -mkdir "$@"
+}
+
+hchmod() {
+  hadoop fs -chmod "$@"
+}
+
+hchown() {
+  hadoop fs -chown "$@"
+}
+
+hchgrp() {
+  hadoop fs -chgrp "$@"
+}
+
+hrep() {
+  sudo -u hdfs hadoop dfsadmin -report | less
+}
+
+hjl() {
+  hadoop job -list "$@"
+}
+
+hkill() {
+  hadoop job -kill "$@"
+}
