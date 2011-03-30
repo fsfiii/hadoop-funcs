@@ -25,12 +25,17 @@ hdf   - filesystem size in human readable form
 Convenience
 ===========
 
-hcat  - hadoop fs -cat
-htext - hadoop fs -text
-hcat  - hadoop fs -cat
-hhead - file head
-htail - file tail
-hget  - hadoop fs -get
-hput  - hadoop fs -put
+hcat   - hadoop fs -cat
+htext  - hadoop fs -text
+hcat   - hadoop fs -cat
+hhead  - file head
+htail  - file tail
+hget   - hadoop fs -get
+hput   - hadoop fs -put
 hmkdir - hadoop fs -mkdir
-...
+hchown - hadoop fs -chown
+hchgrp - hadoop fs -chgrp
+hrep   - sudo -u hdfs hadoop dfsadmin -report | less
+hjl    - hadoop job -list
+hkill  - hadoop job -kill
+
