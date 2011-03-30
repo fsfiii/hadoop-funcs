@@ -1,5 +1,36 @@
 hadoop-funcs
 
 A number of bash helper functions to make life with Hadoop more pleasant.
+Requires perl5.
 
+File Listing ("ls")
+===================
 
+hls   - list only file names (supports -r for recursion)
+hlsh  - list only file sizes (in human readable format) and file names
+hlsm  - list only file sizes (in MB) and file names
+hlsg  - list only file sizes (in GB) and file names
+hlsr  - recursively list only filenames
+hlsl  - full directory listing in human readable format
+        (supports -r for recursion)
+hlslr - recursive full directory listing in human readable format
+
+Directory Sizing ("du")
+=======================
+
+hduhs - directory summary in human readable form
+hduks - directory summary in KB
+hdf   - filesystem size in human readable form
+
+Convenience
+===========
+
+hcat  - hadoop fs -cat
+htext - hadoop fs -text
+hcat  - hadoop fs -cat
+hhead - file head
+htail - file tail
+hget  - hadoop fs -get
+hput  - hadoop fs -put
+hmkdir - hadoop fs -mkdir
+...
