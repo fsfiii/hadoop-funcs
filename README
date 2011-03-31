@@ -32,6 +32,7 @@ htext  - hadoop fs -text
 hcat   - hadoop fs -cat
 hhead  - file head
 htail  - file tail
+hless  - file piped to less
 hget   - hadoop fs -get
 hput   - hadoop fs -put
 hmkdir - hadoop fs -mkdir

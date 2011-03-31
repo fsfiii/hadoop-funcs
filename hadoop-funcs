@@ -179,6 +179,10 @@ htail() {
   hadoop fs -cat "$@" | tail
 }
 
+hless() {
+  hadoop fs -cat "$@" | less
+}
+
 hget() {
   hadoop fs -get "$@"
 }
