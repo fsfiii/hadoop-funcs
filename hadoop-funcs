@@ -191,6 +191,15 @@ hput() {
   hadoop fs -put "$@"
 }
 
+hrm() {
+  [ "$1" = '-r' ] && shift && local _r=r
+  hadoop fs -rm$_r "$@"
+}
+
+hrmr() {
+  hadoop fs -rmr "$@"
+} 
+
 hmkdir() {
   hadoop fs -mkdir "$@"
 }
