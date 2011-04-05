@@ -188,7 +188,34 @@ hget() {
 }
 
 hput() {
-  hadoop fs -put "$@"
+  [ "$1" = '-f' ] && shift && local force=y
+
+  hadoop fs -put "$@" &>/tmp/hput.$$
+  rc=$?
+
+  if [ $rc -ne 0 ] && [ -n "$force" ]; then
+    argv=("$@")
+    argc=$(($# - 1))
+    target=${argv[$argc]}
+
+    # first assume that the target is a file
+    # if it's not a file, try to remove possible directory/file combos
+    echo force: hadoop fs -rm $target
+    hadoop fs -rm $target &>/dev/null
+    if [ $? -ne 0 ]; then
+      n=0
+      while [ $n -lt $argc ]; do
+        echo force: hadoop fs -rm $target/${argv[$n]}
+        hadoop fs -rm $target/${argv[$n]} &>/dev/null
+        n=$((n + 1))
+      done
+    fi
+
+    hadoop fs -put "$@"
+  else
+    cat /tmp/hput.$$ >&2
+    return $rc
+  fi
 }
 
 hrm() {

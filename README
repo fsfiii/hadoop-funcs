@@ -34,7 +34,7 @@ hhead  - file head
 htail  - file tail
 hless  - file piped to less
 hget   - hadoop fs -get
-hput   - hadoop fs -put
+hput   - hadoop fs -put (supports -f for force ... use with caution)
 hrm    - hadoop fs -rm (supports -r for recursion)
 hrmr   - hadoop fs -rmr
 hmkdir - hadoop fs -mkdir
