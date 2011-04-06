@@ -205,8 +205,9 @@ hput() {
     if [ $? -ne 0 ]; then
       n=0
       while [ $n -lt $argc ]; do
-        echo force: hadoop fs -rm $target/${argv[$n]}
-        hadoop fs -rm $target/${argv[$n]} &>/dev/null
+        file=${argv[$n]##*/}
+        echo force: hadoop fs -rm $target/$file
+        hadoop fs -rm $target/$file &>/dev/null
         n=$((n + 1))
       done
     fi
