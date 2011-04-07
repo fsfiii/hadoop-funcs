@@ -187,6 +187,10 @@ hcp() {
   hadoop fs -cp "$@"
 }
 
+hmv() {
+  hadoop fs -mv "$@"
+}
+
 hget() {
   hadoop fs -get "$@"
 }
