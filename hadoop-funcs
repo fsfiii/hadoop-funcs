@@ -183,6 +183,10 @@ hless() {
   hadoop fs -cat "$@" | less
 }
 
+hcp() {
+  hadoop fs -cp "$@"
+}
+
 hget() {
   hadoop fs -get "$@"
 }
