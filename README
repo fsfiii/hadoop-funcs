@@ -42,6 +42,7 @@ hrmr   - hadoop fs -rmr
 hmkdir - hadoop fs -mkdir
 hchown - hadoop fs -chown
 hchgrp - hadoop fs -chgrp
+htouch - hadoop fs -touchz
 hrep   - sudo -u hdfs hadoop dfsadmin -report | less
 hjl    - hadoop job -list
 hkill  - hadoop job -kill

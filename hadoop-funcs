@@ -252,6 +252,10 @@ hchgrp() {
   hadoop fs -chgrp "$@"
 }
 
+htouch() {
+  hadoop fs -touchz "$@"
+}
+
 hrep() {
   sudo -u hdfs hadoop dfsadmin -report | less
 }
