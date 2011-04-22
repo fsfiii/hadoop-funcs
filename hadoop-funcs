@@ -9,8 +9,8 @@ hlst() {
 }
 
 hlsm() {
-  _sort_cmd=cat
-  [ "$1" = '-t' ] && shift && local _sort_cmd="sort -k6,7"
+  local _sort_cmd=cat
+  [ "$1" = '-t' ] && shift && _sort_cmd="sort -k6,7"
 
   hadoop fs -ls "$@" \
     | $_sort_cmd \
@@ -23,8 +23,8 @@ hlsmt() {
 }
 
 hlsg() {
-  _sort_cmd=cat
-  [ "$1" = '-t' ] && shift && local _sort_cmd="sort -k6,7"
+  local _sort_cmd=cat
+  [ "$1" = '-t' ] && shift && _sort_cmd="sort -k6,7"
 
   hadoop fs -ls "$@" \
     | $_sort_cmd \
@@ -41,8 +41,8 @@ hlsr() {
 }
 
 hlsh() {
-  _sort_cmd=cat
-  [ "$1" = '-t' ] && shift && local _sort_cmd="sort -k6,7"
+  local _sort_cmd=cat
+  [ "$1" = '-t' ] && shift && _sort_cmd="sort -k6,7"
 
   hadoop fs -ls "$@" \
     | $_sort_cmd \
