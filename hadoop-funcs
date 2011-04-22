@@ -4,16 +4,36 @@ hls() {
   hadoop fs -ls$_r "$@" | perl -lane 'print $F[7] if $F[7]'
 }
 
+hlst() {
+  hadoop fs -ls "$@" | sort -k6,7 | perl -lane 'print $F[7] if $F[7]'
+}
+
 hlsm() {
+  _sort_cmd=cat
+  [ "$1" = '-t' ] && shift && local _sort_cmd="sort -k6,7"
+
   hadoop fs -ls "$@" \
+    | $_sort_cmd \
     | perl -lane 'printf("%-10s%s\n", int($F[4] / 1024 / 1024) . "M", $F[7])
       if $F[7]'
 }
 
+hlsmt() {
+  hlsm -t "$@"
+}
+
 hlsg() {
+  _sort_cmd=cat
+  [ "$1" = '-t' ] && shift && local _sort_cmd="sort -k6,7"
+
   hadoop fs -ls "$@" \
+    | $_sort_cmd \
     | perl -lane 'printf("%-7s%s\n", int($F[4] / 1024 / 1024 / 1024) . "G",
       $F[7]) if $F[7]'
+}
+
+hlsgt() {
+  hlsg -t "$@"
 }
 
 hlsr() {
@@ -21,7 +41,12 @@ hlsr() {
 }
 
 hlsh() {
-  hadoop fs -ls "$@" | perl -lane '
+  _sort_cmd=cat
+  [ "$1" = '-t' ] && shift && local _sort_cmd="sort -k6,7"
+
+  hadoop fs -ls "$@" \
+    | $_sort_cmd \
+    | perl -lane '
     if ($F[4] > 1099511627776) {
       $size = sprintf "%dT", $F[4] / 1099511627776;
     }
@@ -39,6 +64,10 @@ hlsh() {
     }
     printf "%-5s%s\n", $size, $F[7] if $F[7];
   '
+}
+
+hlsht() {
+  hlsh -t "$@"
 }
 
 hlsl() {
@@ -66,6 +95,10 @@ hlsl() {
     #s/ $home/ ~/;
     print if $F[7];
   '
+}
+
+hlslt() {
+  hlsl "$@" | sort -k6,7
 }
 
 hlslr() {

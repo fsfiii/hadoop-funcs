@@ -11,11 +11,22 @@ File Listing ("ls")
 hls   - list only file names (supports -r for recursion)
 hlsh  - list only file sizes (in human readable format) and file names
 hlsm  - list only file sizes (in MB) and file names
+        (supports -t for sort by modification time old->new)
 hlsg  - list only file sizes (in GB) and file names
+        (supports -t for sort by modification time old->new)
 hlsr  - recursively list only filenames
 hlsl  - full directory listing in human readable format
         (supports -r for recursion)
 hlslr - recursive full directory listing in human readable format
+
+File Listing Sorted by Modification Time
+========================================
+
+hlst  - hls output sorted by time old->new
+hlsht - hlsh output sorted by time old->new
+hlsmt - hlsm output sorted by time old->new
+hlsgt - hlsg output sorted by time old->new
+hlslt - hlsl output sorted by time old->new
 
 Directory Sizing ("du")
 =======================
