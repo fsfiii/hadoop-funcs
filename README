@@ -54,6 +54,7 @@ hmkdir - hadoop fs -mkdir
 hchown - hadoop fs -chown
 hchgrp - hadoop fs -chgrp
 htouch - hadoop fs -touchz
+hmerge - hadoop fs -getmerge
 hrep   - sudo -u hdfs hadoop dfsadmin -report | less
 hjl    - hadoop job -list
 hkill  - hadoop job -kill

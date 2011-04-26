@@ -265,6 +265,8 @@ hrm() {
   hadoop fs -rm$_r "$@"
 }
 
+# one of these days I need to experiment with command_not_found_handle
+
 hrmr() {
   hadoop fs -rmr "$@"
 } 
@@ -287,6 +289,10 @@ hchgrp() {
 
 htouch() {
   hadoop fs -touchz "$@"
+}
+
+hmerge() {
+  hadoop fs -getmerge "$@"
 }
 
 hrep() {
